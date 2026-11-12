@@ -459,7 +459,7 @@ body, h1, h2, h3, h4, h5, h6, span, div, p, td, th {
     justify-content: center !important;
     align-items: center !important;
     text-align: center !important;
-    padding: 0 40px !important;
+    padding: 20px 40px !important;
     box-sizing: border-box !important;
     max-width: none !important;
   }
