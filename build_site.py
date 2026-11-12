@@ -453,7 +453,7 @@ body, h1, h2, h3, h4, h5, h6, span, div, p, td, th {
   .hero {
     margin-left: 300px !important;
     width: calc(100% - 300px) !important;
-    min-height: 100vh !important;
+    min-height: calc(100vh - 38px) !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
@@ -649,7 +649,7 @@ body, h1, h2, h3, h4, h5, h6, span, div, p, td, th {
 }
 .hero__glow { position: absolute; inset: 0; background: radial-gradient(circle at 30% 50%, rgba(34, 197, 94, 0.08), transparent 65%); pointer-events: none; z-index: 0; }
 .hero__content { position: relative; z-index: 1; text-align: left; max-width: 900px; padding: 2rem; }
-.hero__badge { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--graphite); border: 1px solid var(--border); padding: 0.5rem 1rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white-50); margin-bottom: 2rem; }
+.hero__badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white-50); margin-bottom: 2rem; }
 .hero__badge::before { content: ''; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
 .hero__title { margin-bottom: 1.5rem; }
