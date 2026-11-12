@@ -1,0 +1,108 @@
+/* Accessibility / high-contrast mode — toggled via [data-accessibility="true"] on <html> */
+
+html[data-accessibility="true"] {
+  /* Colors already defined in variables.css under [data-accessibility="true"] */
+}
+
+[data-accessibility="true"] body {
+  background: #fff !important;
+  color: #000 !important;
+  font-size: 1.125rem !important;
+}
+
+[data-accessibility="true"] a {
+  color: #0000ee !important;
+  text-decoration: underline !important;
+}
+
+[data-accessibility="true"] a:visited {
+  color: #800080 !important;
+}
+
+[data-accessibility="true"] a:focus,
+[data-accessibility="true"] button:focus,
+[data-accessibility="true"] input:focus {
+  outline: 3px solid #ff0 !important;
+  outline-offset: 2px !important;
+}
+
+[data-accessibility="true"] .btn-primary,
+[data-accessibility="true"] .btn-outline {
+  border: 2px solid #000 !important;
+  color: #000 !important;
+  background: #fff !important;
+}
+
+[data-accessibility="true"] .btn-primary:hover,
+[data-accessibility="true"] .btn-outline:hover {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+[data-accessibility="true"] .theme-btn,
+[data-accessibility="true"] .access-btn,
+[data-accessibility="true"] .nav-toggle,
+[data-accessibility="true"] .nav-close-btn {
+  border: 2px solid #000 !important;
+}
+
+[data-accessibility="true"] .gallery-card {
+  border: 3px solid #000 !important;
+}
+
+[data-accessibility="true"] .accordion-item {
+  border: 3px solid #000 !important;
+}
+
+[data-accessibility="true"] .widget {
+  border: 3px solid #000 !important;
+}
+
+[data-accessibility="true"] .lightbox-close {
+  border: 2px solid #fff !important;
+}
+
+[data-accessibility="true"] .lightbox-prev,
+[data-accessibility="true"] .lightbox-next {
+  border: 2px solid #fff !important;
+}
+
+[data-accessibility="true"] .hero-title,
+[data-accessibility="true"] h1,
+[data-accessibility="true"] h2,
+[data-accessibility="true"] h3,
+[data-accessibility="true"] h4,
+[data-accessibility="true"] h5,
+[data-accessibility="true"] h6 {
+  color: #000 !important;
+}
+
+[data-accessibility="true"] .section-divider {
+  background: #000 !important;
+}
+
+[data-accessibility="true"] .site-footer {
+  background: #fff !important;
+  border-top: 2px solid #000 !important;
+}
+
+[data-accessibility="true"] .site-info a {
+  color: #0000ee !important;
+}
+
+[data-accessibility="true"] .top-bar {
+  background: #fff !important;
+  border-bottom: 2px solid #000 !important;
+}
+
+[data-accessibility="true"] .nav-panel {
+  background: #fff !important;
+}
+
+[data-accessibility="true"] .nav-panel a {
+  border-bottom: 1px solid #000 !important;
+}
+
+[data-accessibility="true"] .nav-menu a.active {
+  background: #e0e0e0 !important;
+}
