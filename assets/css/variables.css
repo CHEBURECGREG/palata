@@ -27,26 +27,26 @@
   --z-toast: 1000;
 
   /* ===== LIGHT THEME (default) ===== */
-  --color-bg: #faf9f7;
+  --color-bg: #faf8f5;
   --color-surface: #ffffff;
-  --color-surface-hover: #f5f3ef;
-  --color-border: #e3e0da;
-  --color-border-hover: #d9d5ca;
+  --color-surface-hover: #f3f0ec;
+  --color-border: #e4e0d8;
+  --color-border-hover: #d9d4cb;
 
-  --color-text-primary: #1c1c1c;
-  --color-text-secondary: #4a4a4a;
-  --color-text-muted: #7a7a7a;
+  --color-text-primary: #241a1e;
+  --color-text-secondary: #5a4a50;
+  --color-text-muted: #8a7a80;
   --color-text-inverse: #ffffff;
 
-  --color-primary: #7a00df;
-  --color-primary-hover: #6a00c2;
-  --color-primary-light: #f0e4ff;
-  --color-accent: #c9a84c;
-  --color-accent-hover: #b8963f;
+  --color-primary: #6b2037;
+  --color-primary-hover: #581a2d;
+  --color-primary-light: #f4e8ec;
+  --color-accent: #a9813e;
+  --color-accent-hover: #936f33;
 
-  --color-success: #2e7d32;
-  --color-warning: #b26a00;
-  --color-error: #b3261e;
+  --color-success: #4a6b4a;
+  --color-warning: #9a6a1e;
+  --color-error: #8a3a3a;
 
   /* Gallery */
   --gallery-gap: 20px;
@@ -78,26 +78,26 @@
 
 /* ===== DARK THEME ===== */
 [data-theme="dark"] {
-  --color-bg: #0f0e10;
-  --color-surface: #1a191c;
-  --color-surface-hover: #252428;
-  --color-border: #333138;
-  --color-border-hover: #4a4750;
+  --color-bg: #0d0b0c;
+  --color-surface: #161214;
+  --color-surface-hover: #221c1f;
+  --color-border: #3a2f32;
+  --color-border-hover: #503f42;
 
-  --color-text-primary: #f5f5f5;
-  --color-text-secondary: #c9c7cb;
-  --color-text-muted: #8a8892;
-  --color-text-inverse: #0f0e10;
+  --color-text-primary: #f5ecee;
+  --color-text-secondary: #c9b3b8;
+  --color-text-muted: #8a7a80;
+  --color-text-inverse: #0d0b0c;
 
-  --color-primary: #b366ff;
-  --color-primary-hover: #c999ff;
-  --color-primary-light: #2a1a40;
-  --color-accent: #e8c547;
-  --color-accent-hover: #f2d97a;
+  --color-primary: #a94059;
+  --color-primary-hover: #c05d75;
+  --color-primary-light: #2a181c;
+  --color-accent: #c9a84c;
+  --color-accent-hover: #d9c27a;
 
-  --color-success: #4caf50;
-  --color-warning: #ffb300;
-  --color-error: #ef5350;
+  --color-success: #5e8a5e;
+  --color-warning: #c98a2e;
+  --color-error: #b35a5a;
 
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.40);
   --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.60);
