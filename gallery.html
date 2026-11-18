@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="ru-RU" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d0b0c">
+<title>Галерея — «Международная палата личности»</title>
+<meta name="description" content="Галерея орденов, наград и церемоний Международной палаты личности.">
+<link rel="canonical" href="gallery.html">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon/favicon-32x32.svg">
+<link rel="apple-touch-icon" href="assets/images/favicon/apple-touch-icon.svg">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        dark: '#0d0b0c',
+        'dark-soft': '#161214',
+        'dark-card': '#1c1214',
+        slate: '#3a2f32',
+        slateLight: '#c9b3b8',
+        gold: '#a9405e',
+        'gold-light': '#c9a84c',
+        platinum: '#f5ecee',
+        'platinum-soft': '#d9c4c8',
+        white: '#f5ecee',
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        serif: ['Georgia', 'Times New Roman', 'serif'],
+      },
+      fontSize: {
+        'display-lg': ['4rem', { lineHeight: '1.02', letterSpacing: '-0.02em' }],
+        'display-md': ['3rem', { lineHeight: '1.05', letterSpacing: '-0.01em' }],
+        'nav-link': ['0.9375rem', { lineHeight: '1.5', fontWeight: '500' }],
+        'body-lg': ['1.125rem', { lineHeight: '1.75' }],
+      },
+      boxShadow: {
+        'premium': '0 20px 40px -10px rgba(16, 8, 10, 0.35)',
+        'premium-hover': '0 30px 60px -15px rgba(16, 8, 10, 0.45)',
+        'gold-glow': '0 0 30px rgba(169, 64, 89, 0.25)',
+      },
+      borderRadius: {
+        'xl': '1.25rem',
+        '2xl': '1.5rem',
+        '3xl': '2rem',
+      },
+      transitionTimingFunction: {
+        'premium': 'cubic-bezier(0.23, 1, 0.32, 1)',
+      }
+    }
+  }
+}
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif:wght@600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0d0b0c;
+  color: #f5ecee;
+}
+
+/* Glassmorphism navigation */
+.nav-glass {
+  background: rgba(16, 8, 10, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(245, 236, 238, 0.08);
+}
+
+/* Premium glass card */
+.glass-card {
+  background: rgba(28, 18, 20, 0.5);
+  border: 1px solid rgba(245, 236, 238, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(169, 64, 89, 0.4);
+  box-shadow: var(--shadow-premium-hover);
+}
+
+/* Gallery grid */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1280px) {
+  .gallery-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Focus visible */
+*:focus-visible {
+  outline: 2px solid #a9405e;
+  outline-offset: 2px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.stagger-1 { animation-delay: 60ms; }
+.stagger-2 { animation-delay: 120ms; }
+.stagger-3 { animation-delay: 180ms; }
+.stagger-4 { animation-delay: 240ms; }
+
+/* Category filter tabs */
+.filter-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #a8868c;
+}
+
+.filter-btn:hover {
+  color: #f5ecee;
+  border-color: rgba(245, 236, 238, 0.2);
+}
+
+.filter-btn.active {
+  background: #a9405e;
+  color: #0d0b0c;
+  border-color: #a9405e;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(16, 8, 10, 0.98);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox.open {
+  display: flex;
+  opacity: 1;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(0.9);
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.lightbox.open .lightbox-content {
+  transform: scale(1);
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: 80vh;
+  border-radius: 1rem;
+  box-shadow: 0 30px 60px -15px rgba(16, 8, 10, 0.5);
+}
+
+.lightbox-caption {
+  margin-top: 1.5rem;
+  color: #d9c4c8;
+  font-size: 1.125rem;
+  font-family: Georgia, serif;
+  text-align: center;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -60px;
+  right: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  border: 1px solid rgba(245, 236, 238, 0.2);
+  background: rgba(16, 8, 10, 0.8);
+  color: #f5ecee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+
+.lightbox-close:hover {
+  background: rgba(169, 64, 89, 0.3);
+  border-color: #a9405e;
+}
+
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 9999px;
+  border: 1px solid rgba(245, 236, 238, 0.2);
+  background: rgba(16, 8, 10, 0.8);
+  color: #f5ecee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+
+.lightbox-prev { left: -80px; }
+.lightbox-next { right: -80px; }
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  background: rgba(169, 64, 89, 0.3);
+  border-color: #a9405e;
+  transform: translateY(-50%) scale(1.05);
+}
+
+@media (max-width: 1024px) {
+  .lightbox-prev { left: 1rem; }
+  .lightbox-next { right: 1rem; }
+}
+
+/* Counter */
+.lightbox-counter {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #a8868c;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+<body class="bg-dark text-platinum-soft antialiased min-h-screen flex flex-col">
+
+<!-- Skip link -->
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-gold focus:text-dark focus:rounded focus:font-semibold">Перейти к основному содержимому</a>
+
+<!-- Navigation -->
+<nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 nav-glass">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 py-3">
+      <!-- Brand -->
+      <a href="index.html" class="flex items-center gap-3 group" aria-label="«Международная палата личности» — главная">
+        <h1 class="text-2xl font-serif font-bold text-platinum-soft leading-tight group-hover:text-gold transition-colors duration-300">«Международная палата личности»</h1>
+      </a>
+
+      <!-- Desktop nav -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="index.html" class="nav-link text-base font-medium text-slateLight hover:text-gold transition-colors duration-200">Главная</a>
+        <a href="#gallery" class="nav-link text-base font-medium text-slateLight hover:text-gold transition-colors duration-200">Галерея</a>
+        <a href="#contacts" class="nav-link text-base font-medium text-slateLight hover:text-gold transition-colors duration-200">Контакты</a>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex items-center gap-3">
+        <button id="access-toggle" class="p-2 rounded-lg text-slateLight hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-dark border border-gold/30" aria-label="Включить версию для слабовидящих" title="Доступность">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+        </button>
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slateLight hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-dark" aria-label="Открыть мобильное меню" aria-expanded="false">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu panel -->
+<div id="mobile-menu" class="fixed inset-0 z-40 bg-dark/95 backdrop-blur-md -translate-x-full transition-transform duration-300 ease-in-out lg:hidden">
+  <div class="flex flex-col h-full pt-12 pb-6 px-6">
+    <div class="flex items-center justify-between mb-12 border-b border-white/10 pb-6">
+      <a href="index.html" class="flex items-center gap-3">
+        <span class="text-lg font-serif font-bold text-white">«Международная палата личности»</span>
+      </a>
+      <button id="mobile-menu-close" class="text-slateLight hover:text-white transition-colors" aria-label="Закрыть меню">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+    </div>
+    <nav class="flex-1 space-y-4">
+      <a href="index.html" class="block px-4 py-3 rounded-xl text-sm font-medium text-slateLight hover:text-white hover:bg-white/5 transition-all duration-200">Главная</a>
+      <a href="#gallery" class="block px-4 py-3 rounded-xl text-sm font-medium text-slateLight hover:text-white hover:bg-white/5 transition-all duration-200">Галерея</a>
+      <a href="#contacts" class="block px-4 py-3 rounded-xl text-sm font-medium text-slateLight hover:text-white hover:bg-white/5 transition-all duration-200">Контакты</a>
+    </nav>
+    <div class="mt-auto space-y-4 border-t border-white/10 pt-6">
+      <button id="mobile-access-toggle" class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-slateLight hover:text-white hover:bg-white/5 transition-all duration-200 border border-gold/30">
+        <span>Версия для слабовидящих</span>
+        <svg class="w-4 h-4 text-slateLight" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile menu overlay -->
+<div id="mobile-menu-overlay" class="fixed inset-0 z-30 bg-[#0d0b0c]/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
+
+<!-- Hero Section -->
+<section id="gallery" class="relative pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden">
+  <div class="absolute inset-0 -z-10">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-gold/10 blur-[120px] -translate-y-1/3"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center max-w-3xl mx-auto fade-in-up">
+      <h1 class="text-display-lg font-serif font-bold text-white tracking-tight leading-tight mb-6 fade-in-up stagger-1">
+        Галерея
+      </h1>
+      <p class="text-body-lg text-slateLight leading-relaxed fade-in-up stagger-2">
+        Коллекция орденов, наград, церемоний и памятных подарков Международной палаты личности.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Category Filter -->
+<section class="py-8 lg:py-12 border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-wrap items-center justify-center gap-3" id="category-filter" role="tablist" aria-label="Фильтр по категориям">
+      <button class="filter-btn active" data-filter="Все" role="tab" aria-selected="true" aria-controls="gallery-grid">Все</button>
+      <button class="filter-btn" data-filter="Ордена" role="tab" aria-selected="false" aria-controls="gallery-grid">Ордена</button>
+      <button class="filter-btn" data-filter="Церемонии" role="tab" aria-selected="false" aria-controls="gallery-grid">Церемонии</button>
+      <button class="filter-btn" data-filter="Патриарх" role="tab" aria-selected="false" aria-controls="gallery-grid">Патриарх</button>
+      <button class="filter-btn" data-filter="Портреты" role="tab" aria-selected="false" aria-controls="gallery-grid">Портреты</button>
+      <button class="filter-btn" data-filter="Историческое" role="tab" aria-selected="false" aria-controls="gallery-grid">Историческое</button>
+      <button class="filter-btn" data-filter="Международное" role="tab" aria-selected="false" aria-controls="gallery-grid">Международное</button>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery Grid -->
+<section class="py-16 lg:py-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="gallery-grid" id="gallery-grid" role="list" aria-label="Галерея наград">
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-1" data-category="Ордена" role="listitem" tabindex="0" onclick="openLightbox(0)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(0)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.14.48-e1730375910347.jpeg" alt="Награждение губернатора Петербурга Владимира Яковлева" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Награждение губернатора Петербурга Владимира Яковлева</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Ордена</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-2" data-category="Ордена" role="listitem" tabindex="0" onclick="openLightbox(1)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(1)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.29.41-e1730376191532.jpeg" alt="Руководители города Ленинграда на церемонии награждения Палатой Личности" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Руководители города  Ленинграда на церемонии  награждения Палатой Личности</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Ордена</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-3" data-category="Ордена" role="listitem" tabindex="0" onclick="openLightbox(2)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(2)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.19.15.jpeg" alt="Орденом князя награжден Кирсан Илюмжинов" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Орденом князя  награжден Кирсан Илюмжинов</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Ордена</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-4" data-category="Ордена" role="listitem" tabindex="0" onclick="openLightbox(3)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(3)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.20.44.jpeg" alt="Орденом Княгиги награждена Н.Дудинская" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Орденом Княгиги награждена Н.Дудинская</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Ордена</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-1" data-category="Ордена" role="listitem" tabindex="0" onclick="openLightbox(4)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(4)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.21.39-e1730376874876.jpeg" alt="Награждение Князя К.Илюмжинова" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Награждение Князя К.Илюмжинова</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Ордена</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-2" data-category="Ордена" role="listitem" tabindex="0" onclick="openLightbox(5)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(5)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.22.13.jpeg" alt="Орден Княгини" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Орден Княгини</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Ордена</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-3" data-category="Ордена" role="listitem" tabindex="0" onclick="openLightbox(6)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(6)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.23.30.jpeg" alt="Награждение Князя М.Аникушина" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Награждение Князя М.Аникушина</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Ордена</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-4" data-category="Ордена" role="listitem" tabindex="0" onclick="openLightbox(7)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(7)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.25.40.jpeg" alt="Герб Князя Азимова" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Герб  Князя Азимова</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Ордена</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-1" data-category="Церемонии" role="listitem" tabindex="0" onclick="openLightbox(8)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(8)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.27.18.jpeg" alt="Петр 1 вручил титул князя Меньшикову" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Петр 1 вручил титул князя Меньшикову</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Церемонии</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-2" data-category="Историческое" role="listitem" tabindex="0" onclick="openLightbox(9)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(9)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.31.30.jpeg" alt="Икона Божьей Матери - покровительница Палаты Личности" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Икона Божьей Матери — покровительница Палаты Личности</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Историческое</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-3" data-category="Ордена" role="listitem" tabindex="0" onclick="openLightbox(10)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(10)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.32.54.jpeg" alt="Награждение семьи Князя в Соборе Петербурга" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Награждение семьи Князя в Соборе Петербурга</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Ордена</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-4" data-category="Патриарх" role="listitem" tabindex="0" onclick="openLightbox(11)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(11)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.36.43.jpeg" alt="Святейший Патриарх Кирилл благословил Палату Личности на добрые дела" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Святейший Патриарх Кирилл благословил Палату Личности на добрые дела</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Патриарх</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-1" data-category="Прочее" role="listitem" tabindex="0" onclick="openLightbox(12)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(12)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.38.53.jpeg" alt="Руководство Императорского дома поддержало деятельность Палаты Личности" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Руководство Императорского дома поддержало деятельность Палаты Личности</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Прочее</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-2" data-category="Портреты" role="listitem" tabindex="0" onclick="openLightbox(13)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(13)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.44.24.jpeg" alt="Князь МПЛ Андрей Ананов" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Князь МПЛ Андрей Ананов</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Портреты</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-3" data-category="Ордена" role="listitem" tabindex="0" onclick="openLightbox(14)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(14)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.45.46.jpeg" alt="Удостоверение Княгини Ольги" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Удостоверение Княгини Ольги</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Ордена</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-4" data-category="Ордена" role="listitem" tabindex="0" onclick="openLightbox(15)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(15)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.52.17.jpeg" alt="Награждение любимой актрисы Петербурга" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Награждение любимой актрисы Петербурга</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Ордена</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-1" data-category="Международное" role="listitem" tabindex="0" onclick="openLightbox(16)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(16)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.56.38.jpeg" alt="Палата сотрудничает с Америкой, г.Сиэтл" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Палата сотрудничает  с Америкой, г.Сиэтл</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Международное</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-2" data-category="Прочее" role="listitem" tabindex="0" onclick="openLightbox(17)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(17)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="assets/images/gallery/whatsapp-image-2024-10-30-at-21.57.42.jpeg" alt="Талисман Палаты" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Талисман Палаты</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Прочее</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-3" data-category="Ордена" role="listitem" tabindex="0" onclick="openLightbox(18)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(18)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.59.50.jpeg" alt="Награждение Князя Огренича Николая, г.Одесса" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Награждение  Князя Огренича Николая, г.Одесса</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Ордена</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-4" data-category="Прочее" role="listitem" tabindex="0" onclick="openLightbox(19)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(19)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.01.23-e1730377363598.jpeg" alt="Подарок князя Аникушина Палате Личности" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Подарок князя Аникушина Палате Личности</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Прочее</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-1" data-category="Церемонии" role="listitem" tabindex="0" onclick="openLightbox(20)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(20)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.06.26.jpeg" alt="Благословение Святейшего Патриарха Палаты Личности. Москва" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Благословение Святейшего Патриарха Палаты Личности. Москва</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Церемонии</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-2" data-category="Церемонии" role="listitem" tabindex="0" onclick="openLightbox(21)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(21)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.10.03.jpeg" alt="Встреча Святейшего Патриарха Алексия председателем Палаты Личности Ю.Малыхиным" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Встреча Святейшего Патриарха Алексия председателем Палаты Личности Ю.Малыхиным</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Церемонии</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-3" data-category="Ордена" role="listitem" tabindex="0" onclick="openLightbox(22)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(22)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.29.17.jpeg" alt="Грамота за достижения в труде" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Грамота за достижения в труде</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Ордена</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-4" data-category="Ордена" role="listitem" tabindex="0" onclick="openLightbox(23)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(23)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.35.28.jpeg" alt="Орденская книжка Палаты Личности" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Орденская книжка Палаты Личности</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Ордена</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-1" data-category="Ордена" role="listitem" tabindex="0" onclick="openLightbox(24)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(24)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.39.05.jpeg" alt="Награда Палате Личности" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Награда Палате Личности</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Ордена</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-2" data-category="Международное" role="listitem" tabindex="0" onclick="openLightbox(25)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(25)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.48.21.jpeg" alt="Подарок Палате Личности от японского князя" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Подарок Палате Личности от японского князя</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Международное</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-3" data-category="Патриарх" role="listitem" tabindex="0" onclick="openLightbox(26)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(26)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.50.07-e1730377550353.jpeg" alt="Подарок Палате Личности от Свт.Патриарха АЛЕКСИЯ 11" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Подарок Палате Личности от Свт.Патриарха АЛЕКСИЯ 11</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Патриарх</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-4" data-category="Международное" role="listitem" tabindex="0" onclick="openLightbox(27)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(27)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.51.38.jpeg" alt="Подарок Палате Личности от Шведского князя Рикарда" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Подарок Палате Личности от Шведского князя Рикарда</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Международное</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-1" data-category="Патриарх" role="listitem" tabindex="0" onclick="openLightbox(28)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(28)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.54.53.jpeg" alt="Подарок Палате Личности от Святейшего Патриарха АЛЕКСИЯ" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Подарок Палате Личности от Святейшего Патриарха АЛЕКСИЯ</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Патриарх</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-2" data-category="Ордена" role="listitem" tabindex="0" onclick="openLightbox(29)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(29)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.59.09.jpeg" alt="Подарок Литовской княгини" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Подарок Литовской княгини</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Ордена</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-3" data-category="Международное" role="listitem" tabindex="0" onclick="openLightbox(30)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(30)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-23.01.53.jpeg" alt="Подарок Князя Нурлана (Казахстан)" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Подарок Князя Нурлана (Казахстан)</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Международное</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-4" data-category="Международное" role="listitem" tabindex="0" onclick="openLightbox(31)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(31)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-23.03.01.jpeg" alt="Подарок князя Романова" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Подарок князя Романова</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Международное</span>
+        </div>
+      </article>
+      <article class="glass-card rounded-3xl overflow-hidden group cursor-pointer aspect-[1/1] fade-in-up stagger-1" data-category="Портреты" role="listitem" tabindex="0" onclick="openLightbox(32)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLightbox(32)}">
+        <div class="relative h-full bg-slate/20 overflow-hidden">
+          <img src="https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-23.05.18-e1730377678819.jpeg" alt="Зам.председателя Палаты князь Константин" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" onerror="this.src='assets/images/placeholders/gallery-placeholder.svg'">
+          <div class="absolute inset-0 bg-[#0d0b0c]/0 group-hover:bg-[#0d0b0c]/10 transition-all duration-500"></div>
+          <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0d0b0c]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-sm font-medium text-white">Зам.председателя Палаты князь Константин</span>
+          </div>
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gold/20 text-gold text-[10px] font-bold tracking-tighter uppercase border border-gold/30 backdrop-blur-sm">Портреты</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-white/10 bg-dark/50 py-12 lg:py-20 backdrop-blur-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <h1 class="text-2xl font-serif font-bold text-platinum-soft">«Международная палата личности»</h1>
+      </div>
+
+      <div class="flex gap-6 text-base text-slateLight">
+        <a href="index.html" class="hover:text-white transition-colors">Главная</a>
+        <a href="#gallery" class="hover:text-white transition-colors">Галерея</a>
+        <a href="#contacts" class="hover:text-white transition-colors">Контакты</a>
+      </div>
+
+      <div class="text-xs text-slateLight/60">
+        Создание сайта: <a href="https://spb.yasite.ru/" target="_blank" rel="noopener" class="text-gold hover:text-gold-light transition-colors">ЯрСайт</a>
+      </div>
+    </div>
+  </div</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Полноэкранный просмотр изображения">
+  <div class="lightbox-content">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Закрыть">
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+    </button>
+    <button class="lightbox-prev" id="lightbox-prev" aria-label="Предыдущее изображение">
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 18l-6-6 6-6" /></svg>
+    </button>
+    <img class="lightbox-img" id="lightbox-img" alt="" src="" loading="lazy">
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+    <span class="lightbox-counter" id="lightbox-counter"></span>
+    <button class="lightbox-next" id="lightbox-next" aria-label="Следующее изображение">
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6" /></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+// Gallery data embedded directly
+const galleryData = [{"file": "whatsapp-image-2024-10-30-at-21.14.48-e1730375910347.jpeg", "alt": "Награждение губернатора Петербурга Владимира Яковлева", "caption": "Награждение губернатора Петербурга Владимира Яковлева", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.14.48-e1730375910347.jpeg", "category": "Ордена"}, {"file": "whatsapp-image-2024-10-30-at-21.29.41-e1730376191532.jpeg", "alt": "Руководители города Ленинграда на церемонии награждения Палатой Личности", "caption": "Руководители города  Ленинграда на церемонии  награждения Палатой Личности", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.29.41-e1730376191532.jpeg", "category": "Ордена"}, {"file": "whatsapp-image-2024-10-30-at-21.19.15.jpeg", "alt": "Орденом князя награжден Кирсан Илюмжинов", "caption": "Орденом князя  награжден Кирсан Илюмжинов", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.19.15.jpeg", "category": "Ордена"}, {"file": "whatsapp-image-2024-10-30-at-21.20.44.jpeg", "alt": "Орденом Княгиги награждена Н.Дудинская", "caption": "Орденом Княгиги награждена Н.Дудинская", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.20.44.jpeg", "category": "Ордена"}, {"file": "whatsapp-image-2024-10-30-at-21.21.39-e1730376874876.jpeg", "alt": "Награждение Князя К.Илюмжинова", "caption": "Награждение Князя К.Илюмжинова", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.21.39-e1730376874876.jpeg", "category": "Ордена"}, {"file": "whatsapp-image-2024-10-30-at-21.22.13.jpeg", "alt": "Орден Княгини", "caption": "Орден Княгини", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.22.13.jpeg", "category": "Ордена"}, {"file": "whatsapp-image-2024-10-30-at-21.23.30.jpeg", "alt": "Награждение Князя М.Аникушина", "caption": "Награждение Князя М.Аникушина", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.23.30.jpeg", "category": "Ордена"}, {"file": "whatsapp-image-2024-10-30-at-21.25.40.jpeg", "alt": "Герб Князя Азимова", "caption": "Герб  Князя Азимова", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.25.40.jpeg", "category": "Ордена"}, {"file": "whatsapp-image-2024-10-30-at-21.27.18.jpeg", "alt": "Петр 1 вручил титул князя Меньшикову", "caption": "Петр 1 вручил титул князя Меньшикову", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.27.18.jpeg", "category": "Церемонии"}, {"file": "whatsapp-image-2024-10-30-at-21.31.30.jpeg", "alt": "Икона Божьей Матери - покровительница Палаты Личности", "caption": "Икона Божьей Матери — покровительница Палаты Личности", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.31.30.jpeg", "category": "Историческое"}, {"file": "whatsapp-image-2024-10-30-at-21.32.54.jpeg", "alt": "Награждение семьи Князя в Соборе Петербурга", "caption": "Награждение семьи Князя в Соборе Петербурга", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.32.54.jpeg", "category": "Ордена"}, {"file": "whatsapp-image-2024-10-30-at-21.36.43.jpeg", "alt": "Святейший Патриарх Кирилл благословил Палату Личности на добрые дела", "caption": "Святейший Патриарх Кирилл благословил Палату Личности на добрые дела", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.36.43.jpeg", "category": "Патриарх"}, {"file": "whatsapp-image-2024-10-30-at-21.38.53.jpeg", "alt": "Руководство Императорского дома поддержало деятельность Палаты Личности", "caption": "Руководство Императорского дома поддержало деятельность Палаты Личности", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.38.53.jpeg", "category": "Прочее"}, {"file": "whatsapp-image-2024-10-30-at-21.44.24.jpeg", "alt": "Князь МПЛ Андрей Ананов", "caption": "Князь МПЛ Андрей Ананов", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.44.24.jpeg", "category": "Портреты"}, {"file": "whatsapp-image-2024-10-30-at-21.45.46.jpeg", "alt": "Удостоверение Княгини Ольги", "caption": "Удостоверение Княгини Ольги", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.45.46.jpeg", "category": "Ордена"}, {"file": "whatsapp-image-2024-10-30-at-21.52.17.jpeg", "alt": "Награждение любимой актрисы Петербурга", "caption": "Награждение любимой актрисы Петербурга", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.52.17.jpeg", "category": "Ордена"}, {"file": "whatsapp-image-2024-10-30-at-21.56.38.jpeg", "alt": "Палата сотрудничает с Америкой, г.Сиэтл", "caption": "Палата сотрудничает  с Америкой, г.Сиэтл", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.56.38.jpeg", "category": "Международное"}, {"file": "whatsapp-image-2024-10-30-at-21.57.42.jpeg", "alt": "Талисман Палаты", "caption": "Талисман Палаты", 'assets/images/gallery/whatsapp-image-2024-10-30-at-21.57.42.jpeg', "category": "Прочее"}, {"file": "whatsapp-image-2024-10-30-at-21.59.50.jpeg", "alt": "Награждение Князя Огренича Николая, г.Одесса", "caption": "Награждение  Князя Огренича Николая, г.Одесса", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-21.59.50.jpeg", "category": "Ордена"}, {"file": "whatsapp-image-2024-10-30-at-22.01.23-e1730377363598.jpeg", "alt": "Подарок князя Аникушина Палате Личности", "caption": "Подарок князя Аникушина Палате Личности", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.01.23-e1730377363598.jpeg", "category": "Прочее"}, {"file": "whatsapp-image-2024-10-30-at-22.06.26.jpeg", "alt": "Благословение Святейшего Патриарха Палаты Личности. Москва", "caption": "Благословение Святейшего Патриарха Палаты Личности. Москва", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.06.26.jpeg", "category": "Церемонии"}, {"file": "whatsapp-image-2024-10-30-at-22.10.03.jpeg", "alt": "Встреча Святейшего Патриарха Алексия председателем Палаты Личности Ю.Малыхиным", "caption": "Встреча Святейшего Патриарха Алексия председателем Палаты Личности Ю.Малыхиным", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.10.03.jpeg", "category": "Церемонии"}, {"file": "whatsapp-image-2024-10-30-at-22.29.17.jpeg", "alt": "Грамота за достижения в труде", "caption": "Грамота за достижения в труде", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.29.17.jpeg", "category": "Ордена"}, {"file": "whatsapp-image-2024-10-30-at-22.35.28.jpeg", "alt": "Орденская книжка Палаты Личности", "caption": "Орденская книжка Палаты Личности", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.35.28.jpeg", "category": "Ордена"}, {"file": "whatsapp-image-2024-10-30-at-22.39.05.jpeg", "alt": "Награда Палате Личности", "caption": "Награда Палате Личности", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.39.05.jpeg", "category": "Ордена"}, {"file": "whatsapp-image-2024-10-30-at-22.48.21.jpeg", "alt": "Подарок Палате Личности от японского князя", "caption": "Подарок Палате Личности от японского князя", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.48.21.jpeg", "category": "Международное"}, {"file": "whatsapp-image-2024-10-30-at-22.50.07-e1730377550353.jpeg", "alt": "Подарок Палате Личности от Свт.Патриарха АЛЕКСИЯ 11", "caption": "Подарок Палате Личности от Свт.Патриарха АЛЕКСИЯ 11", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.50.07-e1730377550353.jpeg", "category": "Патриарх"}, {"file": "whatsapp-image-2024-10-30-at-22.51.38.jpeg", "alt": "Подарок Палате Личности от Шведского князя Рикарда", "caption": "Подарок Палате Личности от Шведского князя Рикарда", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.51.38.jpeg", "category": "Международное"}, {"file": "whatsapp-image-2024-10-30-at-22.54.53.jpeg", "alt": "Подарок Палате Личности от Святейшего Патриарха АЛЕКСИЯ", "caption": "Подарок Палате Личности от Святейшего Патриарха АЛЕКСИЯ", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.54.53.jpeg", "category": "Патриарх"}, {"file": "whatsapp-image-2024-10-30-at-22.59.09.jpeg", "alt": "Подарок Литовской княгини", "caption": "Подарок Литовской княгини", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-22.59.09.jpeg", "category": "Ордена"}, {"file": "whatsapp-image-2024-10-30-at-23.01.53.jpeg", "alt": "Подарок Князя Нурлана (Казахстан)", "caption": "Подарок Князя Нурлана (Казахстан)", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-23.01.53.jpeg", "category": "Международное"}, {"file": "whatsapp-image-2024-10-30-at-23.03.01.jpeg", "alt": "Подарок князя Романова", "caption": "Подарок князя Романова", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-23.03.01.jpeg", "category": "Международное"}, {"file": "whatsapp-image-2024-10-30-at-23.05.18-e1730377678819.jpeg", "alt": "Зам.председателя Палаты князь Константин", "caption": "Зам.председателя Палаты князь Константин", "full_url": "https://xn----7sbaa5baqdtkc7agh5e.xn--p1ai/wp-content/uploads/2024/10/whatsapp-image-2024-10-30-at-23.05.18-e1730377678819.jpeg", "category": "Портреты"}];
+
+// ============================================
+// Lightbox System
+// ============================================
+
+let currentIndex = 0;
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxCaption = document.getElementById('lightbox-caption');
+const lightboxCounter = document.getElementById('lightbox-counter');
+const lightboxClose = document.getElementById('lightbox-close');
+const lightboxPrev = document.getElementById('lightbox-prev');
+const lightboxNext = document.getElementById('lightbox-next');
+
+function openLightbox(index) {
+  currentIndex = index;
+  updateLightbox();
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  lightboxClose.focus();
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function updateLightbox() {
+  const item = galleryData[currentIndex];
+  lightboxImg.src = item.full_url;
+  lightboxImg.alt = item.alt;
+  lightboxCaption.textContent = item.caption;
+  lightboxCounter.textContent = `${currentIndex + 1} / ${galleryData.length}`;
+}
+
+function prevImage() {
+  currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
+  updateLightbox();
+}
+
+function nextImage() {
+  currentIndex = (currentIndex + 1) % galleryData.length;
+  updateLightbox();
+}
+
+// Event listeners
+lightboxClose.addEventListener('click', closeLightbox);
+lightboxPrev.addEventListener('click', prevImage);
+lightboxNext.addEventListener('click', nextImage);
+
+// Close on background click
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) closeLightbox();
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') prevImage();
+  if (e.key === 'ArrowRight') nextImage();
+});
+
+// ============================================
+// Category Filter
+// ============================================
+
+const filterButtons = document.querySelectorAll('.filter-btn');
+const galleryItems = document.querySelectorAll('[data-category]');
+
+filterButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const filter = btn.dataset.filter;
+
+    // Update active button
+    filterButtons.forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+
+    // Filter items
+    galleryItems.forEach(item => {
+      const category = item.dataset.category;
+      if (filter === 'Все' || category === filter) {
+        item.style.display = 'block';
+        item.style.animation = 'fadeInUp 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+});
+
+// ============================================
+// Accessibility Toggle
+// ============================================
+
+const ACCESS_KEY = 'palata-accessibility';
+const accessToggle = document.getElementById('access-toggle');
+const mobileAccessToggle = document.getElementById('mobile-access-toggle');
+
+function setAccessibility(enabled) {
+  if (enabled) {
+    document.body.setAttribute('data-accessibility', 'true');
+    document.body.classList.add('accessibility-mode');
+    localStorage.setItem(ACCESS_KEY, 'true');
+    updateAccessIcon(true);
+  } else {
+    document.body.removeAttribute('data-accessibility');
+    document.body.classList.remove('accessibility-mode');
+    localStorage.setItem(ACCESS_KEY, 'false');
+    updateAccessIcon(false);
+  }
+}
+
+function updateAccessIcon(enabled) {
+  [accessToggle, mobileAccessToggle].forEach(btn => {
+    if (btn) {
+      if (enabled) {
+        btn.classList.add('text-gold', 'ring-1', 'ring-gold', 'bg-white/10');
+        btn.classList.remove('border-gold/30');
+      } else {
+        btn.classList.remove('text-gold', 'ring-1', 'ring-gold', 'bg-white/10');
+        btn.classList.add('border-gold/30');
+      }
+    }
+  });
+}
+
+accessToggle?.addEventListener('click', () => {
+  const enabled = document.body.getAttribute('data-accessibility') === 'true';
+  setAccessibility(!enabled);
+});
+mobileAccessToggle?.addEventListener('click', () => {
+  const enabled = document.body.getAttribute('data-accessibility') === 'true';
+  setAccessibility(!enabled);
+});
+
+// Restore accessibility preference
+const savedAccess = localStorage.getItem(ACCESS_KEY);
+if (savedAccess === 'true') {
+  setAccessibility(true);
+}
+
+// ============================================
+// Mobile Menu
+// ============================================
+
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenuClose = document.getElementById('mobile-menu-close');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+mobileMenuBtn?.addEventListener('click', () => {
+  mobileMenu?.classList.remove('-translate-x-full');
+  mobileMenuOverlay?.classList.remove('opacity-0', 'pointer-events-none');
+  mobileMenuOverlay?.classList.add('opacity-100', 'pointer-events-auto');
+  document.body.style.overflow = 'hidden';
+  mobileMenuBtn.setAttribute('aria-expanded', 'true');
+});
+
+function closeMobileMenu() {
+  mobileMenu?.classList.add('-translate-x-full');
+  mobileMenuOverlay?.classList.remove('opacity-100', 'pointer-events-auto');
+  mobileMenuOverlay?.classList.add('opacity-0', 'pointer-events-none');
+  document.body.style.overflow = '';
+  mobileMenuBtn?.setAttribute('aria-expanded', 'false');
+}
+
+mobileMenuClose?.addEventListener('click', closeMobileMenu);
+mobileMenuOverlay?.addEventListener('click', closeMobileMenu);
+
+mobileMenu?.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', closeMobileMenu);
+});
+
+console.log('«Международная палата личности» — Gallery initialized with ' + galleryData.length + ' images');
+</script>
+</body>
+</html>
